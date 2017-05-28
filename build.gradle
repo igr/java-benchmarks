@@ -41,6 +41,18 @@ task jmh(type:JavaExec, dependsOn: 'build') {
 	classpath = sourceSets.main.runtimeClasspath
 }
 
+tasks.addRule("Pattern: <ClassName>Benchmark : Run benchmark.") { String className ->
+	if (className.endsWith("Benchmark")) {
+		println "\nRUNNING BENCHMARK: " + className + "\n"
+
+		task "$className"(type: JavaExec, dependsOn: 'build') {
+			main 'org.openjdk.jmh.Main'
+			args =  ['.' + className + '.*']
+			classpath = sourceSets.main.runtimeClasspath
+		}
+	}
+}
+
 // --- wrapper ----------------------------------------------------------------
 
 task wrapper(type: Wrapper) {
