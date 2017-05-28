@@ -6,6 +6,7 @@ import java.util.Random;
 /**
  * Simple set of scenarios and examples used in presentation. Most of them
  * show bad benchmarks and are related to special context of the talk.
+ * WARNING: Please do NOT run this class.
  */
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class BenchmarksGoneBad {
