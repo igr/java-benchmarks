@@ -35,7 +35,6 @@ import java.util.concurrent.TimeUnit;
  *
  * Conclusion: Don't use <code>new</code> for numbers, ever. Use <code>valueOf</code>.
  */
-@SuppressWarnings("UnnecessaryBoxing")
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.MILLISECONDS)
@@ -43,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 @Threads(2)
 @Fork(2)
 @State(Scope.Thread)
+@SuppressWarnings({"UnnecessaryBoxing", "unused"})
 public class NumberValueOfBenchmark {
 
 	private int[] arrayUniformDistribution;
