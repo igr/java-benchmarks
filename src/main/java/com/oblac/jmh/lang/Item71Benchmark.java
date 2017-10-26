@@ -19,8 +19,14 @@ import java.util.concurrent.TimeUnit;
  *
  * This sounds unrealistic. And it is:
  *
+ * (not commented)
  * Item71Benchmark.withLocalVariable     avgt   25  33.173 ± 1.429  ns/op
  * Item71Benchmark.withoutLocalVariable  avgt   25  31.357 ± 0.442  ns/op
+ *
+ * (commented)
+ * Benchmark                             Mode  Cnt  Score   Error  Units
+ * Item71Benchmark.withLocalVariable     avgt   25  2.902 ± 0.021  ns/op
+ * Item71Benchmark.withoutLocalVariable  avgt   25  2.905 ± 0.046  ns/op
  */
 @Fork(5)
 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
@@ -34,7 +40,7 @@ public class Item71Benchmark {
 
 	@Benchmark
 	public Object withLocalVariable() {
-		value = null;
+		//value = null;
 
 		Object local = value;
 		if (local == null) {
@@ -50,7 +56,7 @@ public class Item71Benchmark {
 
 	@Benchmark
 	public Object withoutLocalVariable() {
-		value = null;
+		//value = null;
 
 		if (value == null) {
 			synchronized (this) {
