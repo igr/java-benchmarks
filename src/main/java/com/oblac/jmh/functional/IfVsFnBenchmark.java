@@ -1,6 +1,5 @@
 package com.oblac.jmh.functional;
 
-import jodd.mutable.MutableBoolean;
 import jodd.mutable.MutableInteger;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;

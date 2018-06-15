@@ -9,7 +9,6 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
 
 @Fork(1)
 @Warmup(iterations = 5)
@@ -17,7 +16,8 @@ import java.util.Arrays;
 @State(Scope.Benchmark)
 public class FastByteBufferVsBAOSBenchmark {
 
-	@Param({"1", "33", "64", "65", "193", "500", "1000"})
+//	@Param({"1", "33", "64", "65", "193", "500", "1000"})
+	@Param({"65"})
 	public int size;
 
 	@Benchmark

@@ -12,64 +12,80 @@ import java.util.Arrays;
  */
 public class FastByteBuffer {
 
-	private byte[][] buffers = new byte[16][];
-	private byte[] currentBuffer;
-	private int currentBufferIndex;
-	private int blength;
+	private byte[] buffer;
+	private byte[][] allBuffers;
+	private int bufferIndex;
 	private int offset;
+	private int blength;
+	private int threshold = 0;
 
+	/**
+	 * Creates a new {@code byte} buffer. The buffer capacity is
+	 * initially 64 bytes, though its size increases if necessary.
+	 */
 	public FastByteBuffer() {
-		currentBuffer = new byte[64];
-		buffers[0] = currentBuffer;
+		buffer = new byte[64];
+	}
+
+
+	private void growFor(final int delta) {
+		int newBufferSize = buffer.length << 1;
+
+		if (newBufferSize < delta) {
+			newBufferSize = delta + 512;
+		}
+
+		if (threshold < 21) {
+			threshold++;
+			buffer = Arrays.copyOf(buffer, newBufferSize);
+			return;
+		}
+		if (allBuffers == null) {
+			allBuffers = new byte[8][];
+			allBuffers[0] = buffer = Arrays.copyOf(buffer, newBufferSize);
+			return;
+		}
+
+		offset = 0;
+		blength += buffer.length;
+		bufferIndex++;
+		if (bufferIndex >= allBuffers.length) {
+			allBuffers = Arrays.copyOf(allBuffers, allBuffers.length << 1);
+		}
+		allBuffers[bufferIndex] = buffer = new byte[newBufferSize];
 	}
 
 	/**
 	 * Appends single <code>byte</code> to buffer.
 	 */
 	public FastByteBuffer append(final byte element) {
-		if (offset == currentBuffer.length) {
+		if (offset == buffer.length) {
 			growFor(1);
 		}
 
-		currentBuffer[offset++] = element;
+		buffer[offset++] = element;
 
 		return this;
 	}
 
-	private void growFor(final int delta) {
-		int newBufferSize = currentBuffer.length << 1;
-
-		if (newBufferSize < delta) {
-			newBufferSize = delta + 512;
-		}
-
-		blength += currentBuffer.length;
-		offset = 0;
-		currentBuffer = new byte[newBufferSize];
-
-		// add buffer
-		currentBufferIndex++;
-		if (currentBufferIndex >= buffers.length) {
-			buffers = Arrays.copyOf(buffers, buffers.length << 1);
-		}
-		buffers[currentBufferIndex] = currentBuffer;
-	}
-
+	/**
+	 * Creates <code>byte</code> array from buffered content.
+	 */
 	public byte[] toArray() {
-		if (currentBufferIndex == 0) {
-			return Arrays.copyOf(currentBuffer, offset);
+		if (bufferIndex == 0) {
+			return Arrays.copyOf(buffer, offset);
 		}
 
 		int pos = 0;
-		byte[] array = new byte[blength + offset];
+		final byte[] array = new byte[blength + offset];
 
-		for (int i = 0; i < currentBufferIndex; i++) {
-			int len = buffers[i].length;
-			System.arraycopy(buffers[i], 0, array, pos, len);
+		for (int i = 0; i < bufferIndex; i++) {
+			final int len = allBuffers[i].length;
+			System.arraycopy(allBuffers[i], 0, array, pos, len);
 			pos += len;
 		}
 
-		System.arraycopy(buffers[currentBufferIndex], 0, array, pos, offset);
+		System.arraycopy(buffer, 0, array, pos, offset);
 
 		return array;
 	}
