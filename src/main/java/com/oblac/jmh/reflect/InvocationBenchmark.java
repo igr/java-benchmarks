@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 /**
+ *
+As per: https://gist.github.com/raphw/881e1745996f9d314ab0
 
  b.InvocationBenchmark.normal                                 avgt   20  28,364 ± 1,378  ns/op
  b.InvocationBenchmark.primitive                              avgt   20   2,469 ± 0,011  ns/op

@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 /**
+ As per: https://gist.github.com/raphw/881e1745996f9d314ab0
+
  b.LookupBenchmark.reflection                        avgt   20  151,434 ±  15,701  ns/op
 
  b.LookupBenchmark.handle                            avgt   20  913,461 ± 144,966  ns/op

@@ -15,6 +15,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *
+
+As per: https://gist.github.com/raphw/881e1745996f9d314ab0
+
  Benchmark                                                  Mode  Cnt   Score   Error  Units
 
  b.FieldBenchmark.normal                                    avgt   20   2,558 ± 0,031  ns/op
