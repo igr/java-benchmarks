@@ -1,6 +1,6 @@
 package com.oblac.jmh.collection;
 
-import jodd.util.buffer.FastIntBuffer;
+import jodd.buffer.FastIntBuffer;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
