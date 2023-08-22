@@ -1,6 +1,6 @@
-description = '''
-	JMH benchmarks.
-'''
+plugins {
+	id 'java'
+}
 
 version = '0.1.0'
 group = 'com.oblac'
@@ -9,29 +9,20 @@ repositories {
 	mavenCentral()
 }
 
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
-
 dependencies {
-	compile 'org.jodd:jodd-core:5.1.5'
-	compile 'org.openjdk.jmh:jmh-core:1.24'
-	compile 'org.openjdk.jmh:jmh-generator-annprocess:1.24'
+	implementation 'org.jodd:jodd-core:5.1.5'
+	implementation 'org.openjdk.jmh:jmh-core:1.37'
+	annotationProcessor 'org.openjdk.jmh:jmh-generator-annprocess:1.37'
 }
 
 compileJava {
-	sourceCompatibility = '1.8'
-	targetCompatibility = '1.8'
+	sourceCompatibility = '11'
+	targetCompatibility = '11'
 	options.debug = true
 	options.fork = true
 	options.encoding = 'UTF-8'
 	options.compilerArgs << "-Xlint:-options"
 	options.incremental = true
-}
-
-tasks.withType(Javadoc) {
-	options.addStringOption('Xdoclint:none', '-quiet')
 }
 
 task jmh(type:JavaExec, dependsOn: 'build') {
@@ -52,10 +43,4 @@ tasks.addRule("Pattern: <ClassName>Benchmark : Run benchmark.") { String classNa
 			classpath = sourceSets.main.runtimeClasspath
 		}
 	}
-}
-
-// --- wrapper ----------------------------------------------------------------
-
-task wrapper(type: Wrapper) {
-	gradleVersion = '3.5'
 }
