@@ -74,7 +74,7 @@ public class IsoEncodeBenchmark {
 					throw new IllegalArgumentException("Character " + c + " cannot be encoded in ISO-8859-1");
 				}
 
-				encodedStr.append(c); // Add the character to the result string
+				encodedStr.append(c);
 			}
 
 			return encodedStr.toString();
@@ -84,7 +84,7 @@ public class IsoEncodeBenchmark {
 			final StringBuilder decodedStr = new StringBuilder();
 
 			for (char c : str.toCharArray()) {
-				decodedStr.append(c); // Add the character to the result string
+				decodedStr.append(c);
 			}
 
 			return decodedStr.toString();
