@@ -98,7 +98,6 @@ public class IsoEncodeBenchmark {
 	int size;
 
 	String value;
-	int from, to;
 
 	@Setup
 	public void prepare() {
